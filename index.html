@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Consultas | Leandro D’Oliveira</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0d0e;--graphite:#2a2a2b;--gold:#c9a45c;--gold2:#e6cf9a;--cream:#e8dfcc;--white:#fbf9f4;color-scheme:dark;
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:"Jost","Helvetica Neue",Arial,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:linear-gradient(180deg,var(--ink) 0,var(--graphite) 1100px,#3a3a3b 100%);color:var(--cream);font:300 1rem/1.6 var(--sans);min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 70% 38% at 88% 20%,rgba(201,164,92,.13),transparent 70%),radial-gradient(ellipse 60% 34% at 6% 75%,rgba(201,164,92,.09),transparent 70%),radial-gradient(1.6px 1.6px at 40px 60px,rgba(232,223,204,.8),transparent),radial-gradient(1.2px 1.2px at 180px 120px,rgba(201,164,92,.9),transparent),radial-gradient(1.4px 1.4px at 110px 210px,rgba(232,223,204,.6),transparent);background-size:auto,auto,270px 270px,330px 330px,390px 390px;animation:tw 7s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.45}to{opacity:1}}
+.wrap{max-width:520px;margin:0 auto;padding:22px 20px 64px}
+.back{color:rgba(232,223,204,.7);font-size:.88rem;text-decoration:none}
+h1{font:600 2.4rem/1.05 var(--serif);color:var(--white);margin:22px 0 8px}
+.sub{font:500 1.2rem/1.35 var(--serif);margin:0 0 16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+.chips li{border:1px solid rgba(201,164,92,.45);color:var(--gold2);border-radius:99px;padding:4px 13px;font-size:.84rem}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:26px -20px 18px;padding:4px 20px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.tab{flex:none;background:none;border:1px solid rgba(201,164,92,.38);border-radius:99px;padding:9px 18px;color:var(--cream);font-weight:400;transition:all .3s}
+.tab[aria-selected=true]{background:linear-gradient(135deg,var(--gold2),var(--gold));border-color:var(--gold2);color:#1c1a15;font-weight:500}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.panel{display:none}
+.panel.on{display:block;animation:rise .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.intro{margin:0 0 14px;color:rgba(232,223,204,.85)}
+.offer{position:relative;border:1px solid rgba(201,164,92,.3);border-radius:16px;background:rgba(255,255,255,.045);padding:20px;margin-bottom:14px}
+.offer.feat{border-color:rgba(230,207,154,.75);box-shadow:0 0 28px rgba(201,164,92,.16);background:rgba(201,164,92,.07)}
+.tag{display:inline-block;margin-bottom:8px;padding:2px 12px;border-radius:99px;background:var(--gold);color:#1c1a15;font-size:.78rem;font-weight:500}
+h2{font:600 1.65rem/1.1 var(--serif);color:var(--white);margin:0 0 8px}
+.offer p{margin:0 0 8px}
+.bonus{font-size:.9rem;color:var(--gold2)}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
+.price{font:600 1.9rem/1 var(--serif);color:var(--gold2)}
+.btn{display:inline-block;padding:12px 22px;border-radius:99px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1c1a15;font:500 .95rem var(--sans);text-decoration:none;border:0;transition:transform .3s,box-shadow .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(201,164,92,.35)}
+.btn.off{opacity:.35;pointer-events:none}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(201,164,92,.3);border-radius:14px;background:rgba(255,255,255,.045);padding:14px 16px;margin-bottom:10px}
+.row h2{margin:0;font-size:1.35rem}.row .price{font-size:1.4rem;margin-top:2px}
+.rc{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:center;width:100%;border:1px solid rgba(201,164,92,.28);border-radius:14px;padding:13px 14px;margin-bottom:9px;background:rgba(255,255,255,.04);transition:all .35s}
+.rc:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.rc b{display:block;font-weight:500;color:var(--white)}.rc small{color:rgba(232,223,204,.75);font-size:.86rem}
+.ck{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(232,223,204,.4);display:grid;place-items:center;color:transparent;font-size:.8rem;transition:all .35s}
+.rc.on{border-color:var(--gold2);background:rgba(201,164,92,.1)}
+.rc.on .ck{background:var(--gold);border-color:var(--gold2);color:#1c1a15;box-shadow:0 0 14px rgba(201,164,92,.6)}
+.q{display:none;margin-top:8px}.rc.on .q{display:block}.q i{display:block;font-style:normal;font-size:.84rem;color:rgba(232,223,204,.85);padding-left:10px;border-left:1px solid rgba(201,164,92,.5);margin-top:5px}
+.sum{border:1px solid var(--gold);border-radius:16px;padding:18px 20px;margin-top:14px;background:rgba(0,0,0,.25)}
+.sum .price{font-size:2.3rem;transition:transform .3s}.sum .price.pop{transform:scale(1.08)}
+.save{margin:2px 0 0;color:var(--gold2);font-size:.92rem;min-height:1.4em}
+.how{margin:34px 0 0;padding:0;list-style:none;counter-reset:s}
+.how li{counter-increment:s;position:relative;padding:0 0 18px 46px}
+.how li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;border:1px solid var(--gold);color:var(--gold2);display:grid;place-items:center;font:600 1.1rem var(--serif)}
+.how li::after{content:"";position:absolute;left:15.5px;top:36px;bottom:4px;width:1px;background:rgba(201,164,92,.35)}
+.how li:last-child::after{display:none}
+.how b{display:block;color:var(--white);font-weight:500}
+.note{border-top:1px solid rgba(201,164,92,.3);margin-top:12px;padding-top:16px;font-size:.92rem;color:rgba(232,223,204,.8)}
+.foot{margin-top:22px;font:500 1.15rem var(--serif);color:var(--gold2);text-align:center}
+@media (prefers-reduced-motion:reduce){body::before{animation:none}.panel.on{animation:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<a class="back" href="index.html">‹ Voltar</a>
+<h1>Escolha sua consulta</h1>
+<p class="sub">Baralho Cigano com clareza, direto no seu WhatsApp.</p>
+<ul class="chips"><li>Hoje ou amanhã</li><li>Total privacidade</li><li>Áudio, fotos ou chamada</li></ul>
+
+<div class="tabs" role="tablist" aria-label="Tipos de consulta">
+<button class="tab" role="tab" aria-selected="true" data-p="geral">Visão geral</button>
+<button class="tab" role="tab" aria-selected="false" data-p="amor">Amor</button>
+<button class="tab" role="tab" aria-selected="false" data-p="radar">Radar</button>
+<button class="tab" role="tab" aria-selected="false" data-p="perg">Perguntas</button>
+<button class="tab" role="tab" aria-selected="false" data-p="vivo">Ao vivo</button>
+</div>
+
+<section class="panel on" id="geral">
+<div class="offer feat"><span class="tag">Mais completa</span><h2>Previsão Mensal</h2>
+<p>Orientações detalhadas sobre trabalho, dinheiro, relacionamentos, saúde, espiritualidade e família para o mês que começa. Inclui uma previsão personalizada para a sua semana.</p>
+<p class="bonus">Bônus: banhos energéticos, desafio dos 21 dias, pote da fartura, decretos e orações.</p>
+<div class="buy"><span class="price">R$ 187,90</span><a class="btn" data-t="Previsão Mensal" href="#">Agendar no WhatsApp</a></div></div>
+<div class="offer"><h2>Mesa Real</h2>
+<p>Leitura profunda com 36 orientações sobre amor, trabalho, saúde e espiritualidade, com uma visão clara do passado, do presente e do futuro.</p>
+<div class="buy"><span class="price">R$ 250,00</span><a class="btn" data-t="Mesa Real" href="#">Agendar no WhatsApp</a></div></div>
+</section>
+
+<section class="panel" id="amor">
+<div class="offer"><h2>Bússola do Amor</h2>
+<p>Feita com dois baralhos ciganos, olha para a pessoa que você quer entender: o que ela sente, pensa e pretende, e o que esperar dessa relação.</p>
+<div class="buy"><span class="price">R$ 87,90</span><a class="btn" data-t="Bússola do Amor" href="#">Agendar no WhatsApp</a></div></div>
+<div class="offer"><h2>Templo de Afrodite</h2>
+<p>Feito com Tarot, olha para o casal: a sua visão, a visão da pessoa amada e o nível de conexão entre vocês, com as tendências futuras da relação.</p>
+<div class="buy"><span class="price">R$ 180,00</span><a class="btn" data-t="Templo de Afrodite" href="#">Agendar no WhatsApp</a></div></div>
+</section>
+
+<section class="panel" id="radar">
+<p class="intro">Respostas claras e específicas sobre uma área da vida. Cada leitura cruza as dimensões mental, emocional e comportamental, para você entender o que acontece e como se posicionar. Toque em um radar para ver as perguntas que respondo. Quanto mais você escolhe, menos paga por cada um.</p>
+<button class="rc" aria-pressed="false" data-n="Amor"><span class="ck">✓</span><span><b>Radar do Amor</b><small>Entenda seu momento afetivo e o futuro da sua relação.</small><span class="q"><i>Qual seu momento afetivo?</i><i>O que há de positivo no amor?</i><i>O que há de negativo no amor?</i><i>Como ficará daqui pra frente?</i><i>Como você deve agir?</i></span></span></button>
+<button class="rc" aria-pressed="false" data-n="Saúde"><span class="ck">✓</span><span><b>Radar da Saúde</b><small>Entenda as energias que geram desequilíbrios e podem afetar seu corpo.</small><span class="q"><i>Quais energias estão afetando minha saúde?</i><i>O que há de positivo na minha saúde atualmente?</i><i>Com o que devo ter cuidado em relação ao meu bem-estar?</i><i>Como ficará minha saúde nos próximos meses?</i><i>Como posso melhorar meu estado de saúde?</i></span></span></button>
+<button class="rc" aria-pressed="false" data-n="Financeiro"><span class="ck">✓</span><span><b>Radar Financeiro</b><small>Entenda suas finanças, as melhores oportunidades e o que ajustar.</small><span class="q"><i>Como está meu momento financeiro?</i><i>O que há de positivo nas minhas finanças?</i><i>O que há de negativo em minhas finanças?</i><i>Como ficará minha situação financeira?</i><i>O que fazer para melhorar minha saúde financeira?</i></span></span></button>
+<button class="rc" aria-pressed="false" data-n="Profissional"><span class="ck">✓</span><span><b>Radar Profissional</b><small>Clareza sobre trabalho, carreira e suas próximas decisões.</small><span class="q"><i>Como está meu momento profissional?</i><i>O que há de positivo na minha carreira atualmente?</i><i>O que há de negativo na minha carreira atualmente?</i><i>Como fico profissionalmente nos próximos meses?</i><i>O que posso fazer para melhorar minha carreira?</i></span></span></button>
+<button class="rc" aria-pressed="false" data-n="Espiritual"><span class="ck">✓</span><span><b>Radar Espiritual</b><small>As mensagens da sua espiritualidade e as confirmações que você busca.</small><span class="q"><i>Como está meu momento espiritual?</i><i>O que há de positivo na minha espiritualidade?</i><i>Com o que preciso ter cuidado?</i><i>O que me espera no meu futuro espiritual?</i><i>Como devo agir em relação à minha espiritualidade?</i></span></span></button>
+<button class="rc" aria-pressed="false" data-n="Ex-Relacionamento"><span class="ck">✓</span><span><b>Radar do Ex-Relacionamento</b><small>Os próximos passos de uma relação que acabou: sentimentos e se há volta.</small><span class="q"><i>Qual energia do casal no momento?</i><i>Qual sentimento entre nós?</i><i>O que há de negativo entre nós?</i><i>Como ficará daqui pra frente?</i><i>Haverá volta?</i></span></span></button>
+<div class="sum"><div class="buy" style="margin:0"><div><span class="price" id="rp">R$ 0,00</span><p class="save" id="rs">Escolha um radar para ver o valor.</p></div><a class="btn off" id="rb" href="#">Agendar no WhatsApp</a></div></div>
+</section>
+
+<section class="panel" id="perg">
+<p class="intro">Respondo suas perguntas com o baralho cigano, em áudio, e envio as fotos das cartas.</p>
+<div class="row"><div><h2>1 pergunta</h2><span class="price">R$ 37,90</span></div><a class="btn" data-t="1 pergunta" href="#">Agendar</a></div>
+<div class="row"><div><h2>2 perguntas</h2><span class="price">R$ 60,00</span></div><a class="btn" data-t="2 perguntas" href="#">Agendar</a></div>
+<div class="row"><div><h2>3 perguntas</h2><span class="price">R$ 97,90</span></div><a class="btn" data-t="3 perguntas" href="#">Agendar</a></div>
+</section>
+
+<section class="panel" id="vivo">
+<p class="intro">Conversa ao vivo por chamada de vídeo ou áudio no WhatsApp.</p>
+<div class="offer"><h2>30 minutos</h2><p>Tempo para perguntar com calma e aprofundar o que mais importa agora.</p>
+<div class="buy"><span class="price">R$ 180,00</span><a class="btn" data-t="Atendimento de 30 minutos" href="#">Agendar no WhatsApp</a></div></div>
+<div class="offer"><h2>1 hora</h2><p>Mais tempo para tratar de mais de um tema, sem pressa.</p>
+<div class="buy"><span class="price">R$ 250,00</span><a class="btn" data-t="Atendimento de 1 hora" href="#">Agendar no WhatsApp</a></div></div>
+</section>
+
+<ol class="how" aria-label="Como funciona">
+<li><b>Escolha sua consulta</b>Veja as opções acima e toque em agendar.</li>
+<li><b>Chame no WhatsApp</b>A mensagem já vai pronta. Combinamos o horário de hoje ou de amanhã.</li>
+<li><b>Receba seu atendimento</b>Em áudio com fotos das cartas, ou por chamada nas consultas de 30 minutos e 1 hora.</li>
+</ol>
+<p class="note">Sua privacidade vem primeiro: só eu e você temos acesso ao conteúdo do atendimento. Não abordo questões de traição ou paternidade.</p>
+<p class="foot">Um forte abraço, Leandro</p>
+</main>
+<script>
+(function(){
+var WA="5511962434368";
+function wa(t){return "https://wa.me/"+WA+"?text="+encodeURIComponent("Olá, Leandro! Quero agendar: "+t+". Pode me passar os horários disponíveis para hoje ou amanhã?")}
+[].forEach.call(document.querySelectorAll("[data-t]"),function(a){a.href=wa(a.dataset.t);a.target="_blank";a.rel="noopener"});
+var tabs=[].slice.call(document.querySelectorAll(".tab"));
+tabs.forEach(function(t){t.addEventListener("click",function(){
+tabs.forEach(function(x){x.setAttribute("aria-selected",x===t)});
+[].forEach.call(document.querySelectorAll(".panel"),function(p){p.classList.toggle("on",p.id===t.dataset.p)})})});
+var T=[0,57.9,109.9,149.9,189.9,219.9,247.9],rp=document.getElementById("rp"),rs=document.getElementById("rs"),rb=document.getElementById("rb");
+function f(v){return "R$ "+v.toFixed(2).replace(".",",")}
+function upd(){var n=[].map.call(document.querySelectorAll(".rc.on"),function(b){return b.dataset.n}),c=n.length,p=T[c];
+rp.textContent=f(p);rp.classList.add("pop");setTimeout(function(){rp.classList.remove("pop")},250);
+if(c){var s=c*57.9-p;rs.textContent=s>0.01?"Você economiza "+f(s)+" ("+c+" radares)":"1 radar";rb.href=wa("Radar ("+n.join(", ")+")");rb.target="_blank";rb.rel="noopener";rb.classList.remove("off")}
+else{rs.textContent="Escolha um radar para ver o valor.";rb.href="#";rb.classList.add("off")}}
+[].forEach.call(document.querySelectorAll(".rc"),function(b){b.addEventListener("click",function(){b.classList.toggle("on");b.setAttribute("aria-pressed",b.classList.contains("on"));upd()})});
+})();
+</script>
+</body>
+</html>
